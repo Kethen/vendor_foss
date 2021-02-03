@@ -2,8 +2,8 @@
 #set -e
 
 repo="https://f-droid.org/repo/"
-MAIN_ARCH="x86_64"
-SUB_ARCH="x86"
+MAIN_ARCH="arm64-v8a"
+SUB_ARCH="armeabi-v7a"
 
 addCopy() {
 	addition=""
@@ -12,14 +12,13 @@ addCopy() {
 		unzip bin/$1 "lib/*"
 		if [ "$native" == "$MAIN_ARCH" ];then
 			addition="
-LOCAL_MODULE_TARGET_ARCH := $MAIN_ARCH
 LOCAL_PREBUILT_JNI_LIBS := \\
 $(unzip -lv bin/$1 |grep -v Stored |sed -nE 's;.*(lib/'"$MAIN_ARCH"'/.*);\t\1 \\;p')
 			"
 		fi
 		if [ "$native" == "$SUB_ARCH" ];then
 			addition="
-LOCAL_MODULE_TARGET_ARCH := $SUB_ARCH
+LOCAL_MULTILIB := 32
 LOCAL_PREBUILT_JNI_LIBS := \\
 $(unzip -lv bin/$1 |grep -v Stored |sed -nE 's;.*(lib/'"$SUB_ARCH"'/.*);\t\1 \\;p')
 			"
@@ -120,7 +119,8 @@ downloadFromFdroid org.fdroid.fdroid.privileged
 #vlc
 downloadFromFdroid org.videolan.vlc
 #terminal
-downloadFromFdroid jackpal.androidterm
+#downloadFromFdroid jackpal.androidterm
+downloadFromFdroid com.termoneplus
 #task bar
 #downloadFromFdroid com.farmerbb.taskbar
 #icecat
@@ -151,6 +151,8 @@ downloadFromFdroid ws.xsoh.etar "Calendar"
 #downloadFromFdroid com.aurora.store
 #Mail client
 downloadFromFdroid com.fsck.k9 "Email"
+#Calculator
+downloadFromFdroid org.solovyev.android.calculator
 #Ciphered Instant Messaging
 #downloadFromFdroid im.vector.alpha
 #Calendar/Contacts sync
