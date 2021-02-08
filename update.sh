@@ -143,6 +143,8 @@ downloadFromFdroid net.typeblog.shelter
 #downloadFromFdroid org.mozilla.fennec_fdroid "Browser2 QuickSearchBox"
 #Calendar
 downloadFromFdroid ws.xsoh.etar "Calendar"
+#Camera
+downloadFromFdroid com.simplemobiletools.camera "Camera2"
 #Public transportation
 #downloadFromFdroid de.grobox.liberario
 #Pdf viewer
