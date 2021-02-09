@@ -154,7 +154,7 @@ downloadFromFdroid com.simplemobiletools.camera "Camera2"
 #Mail client
 downloadFromFdroid com.fsck.k9 "Email"
 #Calculator
-downloadFromFdroid org.solovyev.android.calculator
+downloadFromFdroid com.simplemobiletools.calculator
 #Ciphered Instant Messaging
 #downloadFromFdroid im.vector.alpha
 #Calendar/Contacts sync
@@ -171,7 +171,7 @@ downloadFromFdroid org.solovyev.android.calculator
 #Fake assistant that research on duckduckgo
 #downloadFromFdroid co.pxhouse.sas
 
-#downloadFromFdroid com.simplemobiletools.gallery.pro "Photos Gallery Gallery2"
+downloadFromFdroid com.simplemobiletools.gallery.pro "Photos Gallery Gallery2"
 
 #downloadFromFdroid com.aurora.adroid
 
