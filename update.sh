@@ -154,7 +154,9 @@ downloadFromFdroid com.simplemobiletools.camera "Camera2"
 #Mail client
 downloadFromFdroid com.fsck.k9 "Email"
 #Calculator
-downloadFromFdroid com.simplemobiletools.calculator
+downloadFromFdroid org.solovyev.android.calculator
+#Editor
+downloadFromFdroid net.gsantner.markor
 #Ciphered Instant Messaging
 #downloadFromFdroid im.vector.alpha
 #Calendar/Contacts sync
