@@ -1,3 +1,5 @@
+
+
 #!/bin/bash
 #set -e
 
@@ -144,7 +146,7 @@ downloadFromFdroid net.typeblog.shelter
 #Calendar
 downloadFromFdroid ws.xsoh.etar "Calendar"
 #Camera
-downloadFromFdroid com.simplemobiletools.camera "Camera2"
+#downloadFromFdroid com.simplemobiletools.camera "Camera2"
 #Public transportation
 #downloadFromFdroid de.grobox.liberario
 #Pdf viewer
