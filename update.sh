@@ -9,32 +9,57 @@ SUB_ARCH="armeabi-v7a"
 
 addCopy() {
 	addition=""
+	extra_module=""
 	if [ "$native" != "" ]
 	then
-		unzip bin/$1 "lib/*"
+		mkdir -p lib/$1
+		(
+			cd lib/$1
+			unzip ../../bin/$1 "lib/*"
+		)
 		if [ "$native" == "$MAIN_ARCH" ];then
 			addition="
 LOCAL_PREBUILT_JNI_LIBS := \\
-$(unzip -lv bin/$1 |grep -v Stored |sed -nE 's;.*(lib/'"$MAIN_ARCH"'/.*);\t\1 \\;p')
+$(cd lib/$1; unzip -lv ../../bin/$1 |grep -v Stored |sed -nE 's;.*(lib/'"$MAIN_ARCH"'/.*);\t\1 \\;p' | while read -r line; do echo lib/$1/$line; done)
 			"
 		fi
 		if [ "$native" == "$SUB_ARCH" ];then
 			addition="
 LOCAL_MULTILIB := 32
 LOCAL_PREBUILT_JNI_LIBS := \\
-$(unzip -lv bin/$1 |grep -v Stored |sed -nE 's;.*(lib/'"$SUB_ARCH"'/.*);\t\1 \\;p')
+$(cd lib/$1; unzip -lv ../../bin/$1 |grep -v Stored |sed -nE 's;.*(lib/'"$MAIN_ARCH"'/.*);\t\1 \\;p'| while read -r line; do echo lib/$1/$line; done)
 			"
 		fi
+		# test
+		#addition="LOCAL_MULTILIB := both"
 	fi
     if [ "$2" == com.google.android.gms ] || [ "$2" == com.android.vending ] || [ "$2" == org.fdroid.fdroid.privileged ] || [ "$2" == com.farmerbb.taskbar ];then
-        addition="LOCAL_PRIVILEGED_MODULE := true"
+        addition="$addition
+LOCAL_PRIVILEGED_MODULE := true"
+    fi
+    if [ "$2" == com.android.webview ];then
+    	addition="$addition
+LOCAL_REQUIRED_MODULES := libwebviewchromium_loader libwebviewchromium_plat_support"
+    fi
+    if [ "$2" == org.fdroid.fdroid.privileged ];then
+		addition="$addition
+LOCAL_REQUIRED_MODULES := privapp-permissions-org.fdroid.fdroid.privileged.xml"
+		extra_module="include \$(CLEAR_VARS)
+LOCAL_MODULE := privapp-permissions-org.fdroid.fdroid.privileged.xml
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_PATH := \$(TARGET_OUT_ETC)/permissions
+LOCAL_SRC_FILES := etc/\$(LOCAL_MODULE)
+include \$(BUILD_PREBUILT)"
     fi
 cat >> Android.mk <<EOF
+$extra_module
 include \$(CLEAR_VARS)
 LOCAL_MODULE := $2
 LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := bin/$1
 LOCAL_MODULE_CLASS := APPS
+LOCAL_MODULE_SUFFIX := \$(COMMON_ANDROID_PACKAGE_SUFFIX)
 LOCAL_CERTIFICATE := PRESIGNED
 LOCAL_OVERRIDES_PACKAGES := $3
 $addition
@@ -120,92 +145,26 @@ downloadFromFdroid org.fdroid.fdroid
 downloadFromFdroid org.fdroid.fdroid.privileged
 #vlc
 downloadFromFdroid org.videolan.vlc
-#terminal
-#downloadFromFdroid jackpal.androidterm
-downloadFromFdroid com.termoneplus
-#task bar
-#downloadFromFdroid com.farmerbb.taskbar
-#icecat
-#downloadFromFdroid org.gnu.icecat "Browser2"
-#downloadFromFdroid org.gnu.icecat "Browser2 QuickSearchBox"
-#lawnchair
-#downloadFromFdroid ch.deletescape.lawnchair.plah
-#bliss launcher
-#downloadFromFdroid foundation.e.blisslauncher
-#downloadFromFdroid foundation.e.blisslauncher "Launcher3QuickStep"
 #shelter
 downloadFromFdroid net.typeblog.shelter
-#phh's Superuser
-#downloadFromFdroid me.phh.superuser
-#Ciphered SMS
-#downloadFromFdroid org.smssecure.smssecure "messaging"
-#Navigation
-#downloadFromFdroid net.osmand.plus
 #Web browser
-#downloadFromFdroid org.mozilla.fennec_fdroid "Browser2 QuickSearchBox"
+downloadFromFdroid org.mozilla.fennec_fdroid
 #Calendar
 downloadFromFdroid ws.xsoh.etar "Calendar"
 #Camera
-#downloadFromFdroid com.simplemobiletools.camera "Camera2"
-#Public transportation
-#downloadFromFdroid de.grobox.liberario
-#Pdf viewer
-#downloadFromFdroid com.artifex.mupdf.viewer.app
-#Play Store download
-#downloadFromFdroid com.aurora.store
+downloadFromFdroid net.sourceforge.opencamera "Camera2"
 #Mail client
 downloadFromFdroid com.fsck.k9 "Email"
 #Calculator
 downloadFromFdroid org.solovyev.android.calculator
 #Editor
 downloadFromFdroid net.gsantner.markor
-#Ciphered Instant Messaging
-#downloadFromFdroid im.vector.alpha
-#Calendar/Contacts sync
-#downloadFromFdroid com.etesync.syncadapter
-#Nextcloud client
-#downloadFromFdroid com.nextcloud.client
-# Todo lists
-#downloadFromFdroid org.tasks
-
-#downloadFromFdroid org.mariotaku.twidere
-#downloadFromFdroid com.pitchedapps.frost
-#downloadFromFdroid com.keylesspalace.tusky
-
-#Fake assistant that research on duckduckgo
-#downloadFromFdroid co.pxhouse.sas
-
-downloadFromFdroid com.simplemobiletools.gallery.pro "Photos Gallery Gallery2"
-
-#downloadFromFdroid com.aurora.adroid
-
-#repo=https://microg.org/fdroid/repo/
-#downloadFromFdroid com.google.android.gms
-#downloadFromFdroid com.google.android.gsf
-#downloadFromFdroid com.android.vending
-#downloadFromFdroid org.microg.gms.droidguard
-
-#repo=https://archive.newpipe.net/fdroid/repo/
-#YouTube viewer
-#downloadFromFdroid org.schabi.newpipe
-
+# map
+downloadFromFdroid net.osmand.plus
+# bromite webkit replacement
 repo=https://fdroid.bromite.org/fdroid/repo
-downloadFromFdroid org.bromite.bromite "Browser2"
-
-#open weather provider
-#wget https://mirrorbits.lineageos.org/WeatherProviders/20190718/OpenWeatherProvider-16.0-signed.apk -O bin/OpenWeatherProvider.apk
-#cat >> Android.mk <<EOF
-#include \$(CLEAR_VARS)
-#LOCAL_MODULE := OpenWeatherProvider
-#LOCAL_MODULE_TAGS := optional
-#LOCAL_SRC_FILES := bin/OpenWeatherProvider.apk
-#LOCAL_MODULE_CLASS := APPS
-#LOCAL_CERTIFICATE := PRESIGNED
-#include \$(BUILD_PREBUILT)
-
-#EOF
-
-#echo -e "\tOpenWeatherProvider \\" >> apps.mk
+downloadFromFdroid org.bromite.bromite "Browser2 QuickSearchBox"
+downloadFromFdroid com.android.webview "webview"
 
 echo >> apps.mk
 
