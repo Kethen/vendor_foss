@@ -159,6 +159,8 @@ downloadFromFdroid com.fsck.k9 "Email"
 downloadFromFdroid org.solovyev.android.calculator
 #Editor
 downloadFromFdroid net.gsantner.markor
+#QKSMS
+downloadFromFdroid com.moez.QKSMS "messaging"
 # map
 downloadFromFdroid net.osmand.plus
 # bromite webkit replacement
