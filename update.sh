@@ -165,6 +165,8 @@ downloadFromFdroid com.moez.QKSMS "messaging"
 downloadFromFdroid net.osmand.plus
 #pdf viewer plus
 downloadFromFdroid com.gsnathan.pdfviewer
+#openkeychain
+downloadFromFdroid org.sufficientlysecure.keychain
 # bromite webkit replacement
 repo=https://fdroid.bromite.org/fdroid/repo
 downloadFromFdroid org.bromite.bromite "Browser2 QuickSearchBox"
