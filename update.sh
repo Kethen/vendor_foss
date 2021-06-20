@@ -163,6 +163,8 @@ downloadFromFdroid net.gsantner.markor
 downloadFromFdroid com.moez.QKSMS "messaging"
 # map
 downloadFromFdroid net.osmand.plus
+#pdf viewer plus
+downloadFromFdroid com.gsnathan.pdfviewer
 # bromite webkit replacement
 repo=https://fdroid.bromite.org/fdroid/repo
 downloadFromFdroid org.bromite.bromite "Browser2 QuickSearchBox"
