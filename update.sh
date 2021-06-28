@@ -144,15 +144,15 @@ downloadFromFdroid org.fdroid.fdroid
 #fdroid extension
 downloadFromFdroid org.fdroid.fdroid.privileged
 #vlc
-downloadFromFdroid org.videolan.vlc
+downloadFromFdroid org.videolan.vlc "Eleven"
 #shelter
 downloadFromFdroid net.typeblog.shelter
 #Web browser
 downloadFromFdroid org.mozilla.fennec_fdroid
 #Calendar
-downloadFromFdroid ws.xsoh.etar "Calendar"
+downloadFromFdroid ws.xsoh.etar "Calendar Etar"
 #Camera
-downloadFromFdroid net.sourceforge.opencamera "Camera2"
+downloadFromFdroid net.sourceforge.opencamera "Camera2 Snap"
 #Mail client
 downloadFromFdroid com.fsck.k9 "Email"
 #Calculator
@@ -167,9 +167,11 @@ downloadFromFdroid net.osmand.plus
 downloadFromFdroid com.gsnathan.pdfviewer
 #openkeychain
 downloadFromFdroid org.sufficientlysecure.keychain
+#libreoffice viewer
+downloadFromFdroid org.documentfoundation.libreoffice
 # bromite webkit replacement
 repo=https://fdroid.bromite.org/fdroid/repo
-downloadFromFdroid org.bromite.bromite "Browser2 QuickSearchBox"
+downloadFromFdroid org.bromite.bromite "Browser2 QuickSearchBox Jelly"
 downloadFromFdroid com.android.webview "webview"
 
 echo >> apps.mk
