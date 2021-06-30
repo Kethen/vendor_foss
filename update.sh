@@ -27,7 +27,7 @@ $(cd lib/$1; unzip -lv ../../bin/$1 |grep -v Stored |sed -nE 's;.*(lib/'"$MAIN_A
 			addition="
 LOCAL_MULTILIB := 32
 LOCAL_PREBUILT_JNI_LIBS := \\
-$(cd lib/$1; unzip -lv ../../bin/$1 |grep -v Stored |sed -nE 's;.*(lib/'"$MAIN_ARCH"'/.*);\t\1 \\;p'| while read -r line; do echo lib/$1/$line; done)
+$(cd lib/$1; unzip -lv ../../bin/$1 |grep -v Stored |sed -nE 's;.*(lib/'"$SUB_ARCH"'/.*);\t\1 \\;p'| while read -r line; do echo lib/$1/$line; done)
 			"
 		fi
 		# test
